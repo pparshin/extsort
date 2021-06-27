@@ -67,7 +67,8 @@ func generate() <-chan string {
 }
 
 func generateRandomString() string {
-	b := make([]rune, *maxLen)
+	length := rand.Intn(int(*maxLen)) + 1
+	b := make([]rune, length)
 	for i := range b {
 		b[i] = alphabet[rand.Intn(len(alphabet))]
 	}
