@@ -26,17 +26,13 @@ func (m *Merger) Add(filename string) {
 	m.files = append(m.files, filename)
 }
 
-func (m *Merger) Len() int {
-	return len(m.files)
-}
-
-func (m *Merger) MergeAll() (string, error) {
+func (m *Merger) Merge() (string, error) {
 	if len(m.files) == 0 {
 		return "", ErrNothingMerge
 	}
 
 	for len(m.files) > 1 {
-		err := m.Merge()
+		err := m.mergeTwo()
 		if err != nil {
 			return "", err
 		}
@@ -45,7 +41,7 @@ func (m *Merger) MergeAll() (string, error) {
 	return m.files[0], nil
 }
 
-func (m *Merger) Merge() error {
+func (m *Merger) mergeTwo() error {
 	merged := make([]string, 0)
 	for i := 0; i < len(m.files)-1; i += 2 {
 		res, err := mergeSorted(m.files[i], m.files[i+1])

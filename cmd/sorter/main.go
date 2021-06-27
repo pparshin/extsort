@@ -18,8 +18,7 @@ var (
 )
 
 const (
-	chunkSize      = 100
-	mergeThreshold = 10
+	chunkSize = 100
 )
 
 func main() {
@@ -49,15 +48,6 @@ func main() {
 
 			printMemUsage()
 		}
-
-		if merger.Len() == mergeThreshold {
-			err = merger.Merge()
-			if err != nil {
-				log.Fatal(err)
-			}
-
-			printMemUsage()
-		}
 	}
 
 	if chunk.Len() != 0 {
@@ -69,7 +59,7 @@ func main() {
 		merger.Add(filename)
 	}
 
-	result, err := merger.MergeAll()
+	result, err := merger.Merge()
 	if err != nil {
 		log.Fatal(err)
 	}
